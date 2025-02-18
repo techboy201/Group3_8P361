@@ -78,7 +78,7 @@ model = get_model()
 
 
 # get the data generators
-train_gen, val_gen = get_pcam_generators('/change/me/to/dataset/path')
+train_gen, val_gen = get_pcam_generators('../datasets/')
 
 
 
