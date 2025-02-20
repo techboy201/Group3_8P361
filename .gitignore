@@ -92,6 +92,7 @@ venv.bak/
 
 # dataset
 dataset/
+datasets/
 
 # Spyder project settings
 .spyderproject
