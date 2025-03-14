@@ -50,7 +50,7 @@ input_shape = (IMAGE_SIZE, IMAGE_SIZE, 3)
 input = Input(input_shape)
 
 # get the pretrained model, cut out the top layer
-pretrained = MobileNetV2(input_shape=input_shape, include_top=False, weights='imagenet')
+pretrained = MobileNetV2(input_shape=input_shape, include_top=False, weights=None)
 
 # if the pretrained model it to be used as a feature extractor, and not for
 # fine-tuning, the weights of the model can be frozen in the following way
