@@ -9,7 +9,7 @@ input_folder = r"C:\Users\20212208\OneDrive - TU Eindhoven\Desktop\8P361\Project
 output_folder = "1_val_modified"
 os.makedirs(output_folder, exist_ok=True)
 
-# CSV-bestand om stipcoördinaten op te slaan
+# Create a CSV-file to save dot coordinates
 output_csv = os.path.join(output_folder, "stip_coordinates.csv")
 stip_data = []
 
@@ -45,7 +45,7 @@ for image_file in image_files:
     # Append data (image filename, x, y, radius)
     stip_data.append([image_file, x, y, dot_radius])
 
-# Opslaan als CSV
+# Save as CSV
 df = pd.DataFrame(stip_data, columns=["image_name", "x", "y", "radius"])
 df.to_csv(output_csv, index=False)
 
