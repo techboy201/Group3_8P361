@@ -90,10 +90,6 @@ ENV/
 env.bak/
 venv.bak/
 
-# dataset
-dataset/
-datasets/
-
 # Spyder project settings
 .spyderproject
 .spyproject
