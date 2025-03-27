@@ -83,7 +83,7 @@ model = get_model()
 
 
 # get the data generators
-train_gen, val_gen = get_pcam_generators(r'C:\Users\20212208\OneDrive - TU Eindhoven\Desktop\8P361\Project_8P')
+train_gen, val_gen = get_pcam_generators('../datasets')
 
 
 
@@ -116,9 +116,9 @@ history = model.fit(train_gen, steps_per_epoch=train_steps,
 # ROC analysis
 
 # Define paths
-VALIDATION_DIR = r"C:\Users\20212208\OneDrive - TU Eindhoven\Desktop\8P361\Project_8P\train+val\valid"
-MODEL_JSON_PATH = r"C:\Users\20212208\OneDrive - TU Eindhoven\Desktop\8P361\Project_8P\my_first_cnn_model.json"
-MODEL_WEIGHTS_PATH = r"C:\Users\20212208\OneDrive - TU Eindhoven\Desktop\8P361\Project_8P\my_first_cnn_model_weights.hdf5"
+VALIDATION_DIR = "..datasets/train+val/valid"
+MODEL_JSON_PATH = "..datasets/my_first_cnn_model.json"
+MODEL_WEIGHTS_PATH = "..datasets/my_first_cnn_model_weights.hdf5"
 
 # Load model architecture from JSON
 with open(MODEL_JSON_PATH, "r") as json_file:
