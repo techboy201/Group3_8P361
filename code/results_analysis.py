@@ -43,53 +43,58 @@ def t_stat_analysis(results_normal, results_augmented):
     print(f"T-statistic: {t_stat:.4f} | P-value: {p_value:.4e}")
 
 
-def plot_side_by_side(image_names, base_dir, csv_path, model1, model2, label1="Normal", label2="Augmented"):
-    df = pd.read_csv(csv_path)
-    df = df[df["image_name"].isin(image_names)].set_index("image_name")
+def plot_side_by_side(image_names, base_dir, csv_normal, csv_augmented, model1, model2, label1="Normal", label2="Augmented"):
+    df_normal = pd.read_csv(csv_normal).set_index("image_name")
+    df_augmented = pd.read_csv(csv_augmented).set_index("image_name")
 
-    fig, axs = plt.subplots(len(image_names), 2, figsize=(8, 4 * len(image_names)))
+    fig, axs = plt.subplots(len(image_names), 2, figsize=(10, 4 * len(image_names)))
 
     for i, image_name in enumerate(image_names):
         image_path = os.path.join(base_dir, image_name)
         image = load_image(image_path)
+
         heatmap1, pred1 = compute_gradcam(model1, image)
         heatmap2, pred2 = compute_gradcam(model2, image)
 
         overlay1 = overlay_gradcam(image, heatmap1)
         overlay2 = overlay_gradcam(image, heatmap2)
 
+        gmi1 = df_normal.loc[image_name, 'GMI'] if image_name in df_normal.index else "N/A"
+        gmi2 = df_augmented.loc[image_name, 'GMI'] if image_name in df_augmented.index else "N/A"
+
         axs[i, 0].imshow(overlay1)
-        axs[i, 0].set_title(f"{label1}\nPred: {pred1:.2f} | GMI: {df.loc[image_name, 'GMI']:.2f}")
+        axs[i, 0].set_title(f"{label1}\nPred: {pred1:.2f} | GMI: {gmi1:.2f}" if gmi1 != "N/A" else f"{label1}\nPred: {pred1:.2f} | GMI: N/A")
         axs[i, 0].axis("off")
 
         axs[i, 1].imshow(overlay2)
-        axs[i, 1].set_title(f"{label2}\nPred: {pred2:.2f} | GMI: N/A")
+        axs[i, 1].set_title(f"{label2}\nPred: {pred2:.2f} | GMI: {gmi2:.2f}" if gmi2 != "N/A" else f"{label2}\nPred: {pred2:.2f} | GMI: N/A")
         axs[i, 1].axis("off")
 
     plt.tight_layout()
     plt.show()
 
 
-model_normal = load_model("cnn_model_normal_data.json", "cnn_model_normal_data_weights.hdf5")
+model_normal = load_model("cnn_model_normal_data.json", "cnn_model_normadata_weights.hdf5")
 model_augmented = load_model("cnn_model_augmented data.json", "cnn_model_augmented data_weights.hdf5")
 
-# Kies 5 afbeeldingen
+# Choose 5 images
 image_names_to_plot = [
-    "00001b2b5609af42ab0ab276dd4cd41c3e7745b5.jpg",
-    "0018f45df78db5e21d0b52f4d97a1f6540786aab.jpg",
-    "0059d8e5018a03b8af4454b23f5f429476c392e4.jpg",
-    "0069beab1504f4dbb63f51682c743ac12c477c4a.jpg",
-    "007fcf180a28349702a4a6749e20554e0cb326b2.jpg"
+    "0000ec92553fda4ce39889f9226ace43cae3364e.jpg",
+    "00024a6dee61f12f7856b0fc6be20bc7a48ba3d2.jpg",
+    "000253dfaa0be9d0d100283b22284ab2f6b643f6.jpg",
+    "000270442cc15af719583a8172c87cd2bd9c7746.jpg",
+    "000360e0d8358db520b5c7564ac70c5706a0beb0.jpg"
 ]
 
 plot_side_by_side(
     image_names=image_names_to_plot,
-    base_dir=r"D:\School\Project AI for MIA\data\train+val\valid\1_val_modified",
-    csv_path="gmi_results_normal.csv",
+    base_dir=r"D:\School\Project AI for MIA\data\test_jpg",
+    csv_normal="gmi_results_normal_test.csv",
+    csv_augmented="gmi_results_augmented_test_normal.csv",
     model1=model_normal,
     model2=model_augmented
 )
 
-results_normal = "gmi_results_normal.csv"
-results_augmented = "gmi_results_augmented.csv"
+results_normal = "gmi_results_normal_test.csv"
+results_augmented = "gmi_results_augmented_test_normal.csv"
 t_stat_analysis(results_normal, results_augmented)

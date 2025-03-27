@@ -136,14 +136,14 @@ def run_gmi_analysis(model_json, weights, csv_path, image_dir, conv_layer_name):
 
 
 results_df = run_gmi_analysis(
-    model_json="cnn_model_normal_data.json",
-    weights="cnn_model_normal_data_weights.hdf5",
-    csv_path="val_stip_coord.csv",
-    image_dir=r"D:\School\Project AI for MIA\data\train+val\valid\1_val_modified",  # Folder with modified images
+    model_json="cnn_model_augmented data.json",
+    weights="cnn_model_augmented data_weights.hdf5",
+    csv_path="test_stip_coordinates.csv",
+    image_dir=r"D:\School\Project AI for MIA\data\test_jpg",  # Folder with images
     conv_layer_name="conv2d_2"   # Can be changed to another convolutional layer
 )
 
 print(results_df.head())
-results_df.to_csv("gmi_results_normal.csv", index=False)
+results_df.to_csv("gmi_results_augmented_test_normal.csv", index=False)
 
 
