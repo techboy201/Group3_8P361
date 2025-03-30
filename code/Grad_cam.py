@@ -32,7 +32,7 @@ def load_image(image_path):
 
     return image
 
-def compute_gradcam(model, img_array, layer_name="conv2d_2"):
+def compute_gradcam(model, img_array, layer_name="conv2d"):
     """
     Generates a Grad-Cam heatmap for a given image and model.
     :param model: The previously loaded model
@@ -136,14 +136,15 @@ def run_gmi_analysis(model_json, weights, csv_path, image_dir, conv_layer_name):
 
 
 results_df = run_gmi_analysis(
-    model_json="cnn_model_augmented data.json",
-    weights="cnn_model_augmented data_weights.hdf5",
-    csv_path="test_stip_coordinates.csv",
-    image_dir=r"D:\School\Project AI for MIA\data\test_jpg",  # Folder with images
-    conv_layer_name="conv2d_2"   # Can be changed to another convolutional layer
-)
+    model_json="models+weights/cnn_model_50%_confounded.json",
+    weights="models+weights/cnn_model_50%_confounded_weights.hdf5",
+    csv_path="../results/test_stip_coordinates.csv",
+    #image_dir="../datasets/gmi/test_jpg",       # base folder
+    image_dir= "../datasets/gmi/test_modified",  # Folder with modified images
+    conv_layer_name="conv2d"   # Can be changed to another convolutional layer
+    )
 
 print(results_df.head())
-results_df.to_csv("gmi_results_augmented_test_normal.csv", index=False)
+results_df.to_csv("../results/gmi_results_50%_test.csv", index=False)
 
 
