@@ -1,7 +1,11 @@
+
+"""
+This stript creates a mix of original and confounded images for a dataset and trains a model using that dataset.
+Additionally, it creates a ROC curve for the trained model. 
+"""
+
 import os
-
 import numpy as np
-
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten
