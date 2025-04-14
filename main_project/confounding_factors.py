@@ -1,3 +1,8 @@
+"""
+This script was used to created a dateset with images that had a confouding factor to them. 
+However, it was later revealed that it was important to save the coordinates of the black dot, so this has been redone in 'Confounding factors with coordinates.py'.
+"""
+
 import os
 import cv2
 import numpy as np
