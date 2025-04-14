@@ -13,10 +13,8 @@ The code in the `/main_project/` folder was used for the final results. First th
 The following resources were used as a foundation for the Grad-CAM code and GMI analysis:
 
 - Selvaraju et al. (2017). Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization. [arXiv:1610.02391](https://arxiv.org/abs/1610.02391)
-- TensorFlow Interpretability Tutorials: [https://www.tensorflow.org/tutorials/interpretability/gradcam](https://www.tensorflow.org/tutorials/interpretability/gradcam)
 - Matplotlib Visualization: [https://matplotlib.org](https://matplotlib.org)
-- OpenCV Documentation: [https://docs.opencv.org](https://docs.opencv.org)
 - Pillow (PIL): [https://pillow.readthedocs.io](https://pillow.readthedocs.io)
-- Stack Overflow:[https://stackoverflow.com/questions/55266249/create-a-mixed-data-generator-images-csv-in-keras](https://stackoverflow.com/questions/55266249/create-a-mixed-data-generator-images-csv-in-keras),
+- Stack Overflow:[https://stackoverflow.com/questions/55266249/create-a-mixed-data-generator-images-csv-in-keras](https://stackoverflow.com/questions/55266249/create-a-mixed-data-generator-images-csv-in-keras),[https://stackoverflow.com/questions/66182884/how-to-implement-grad-cam-on-a-trained-network](https://stackoverflow.com/questions/66182884/how-to-implement-grad-cam-on-a-trained-network)
 - Keras examples: [https://keras.io/examples/vision/grad_cam/](https://keras.io/examples/vision/grad_cam/) 
 
