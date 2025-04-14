@@ -1,15 +1,21 @@
+"""
+This script is used to insert an augmentation to an image dataset. Specifically, it adds a black dot at a random location on each
+image and records its position and radius in a CSV file.
+"""
+
 import os
 import cv2
 import numpy as np
 import random
 import pandas as pd
 
-# Folder paths
+
+# Select input and output folder for the image dataset
 input_folder = r"C:\Users\20212208\OneDrive - TU Eindhoven\Desktop\8P361\Project_8P\train+val\valid\1"
 output_folder = "1_val_modified"
 os.makedirs(output_folder, exist_ok=True)
 
-# Create a CSV-file to save dot coordinates
+# Create a CSV-file to save dot coordinates and radius
 output_csv = os.path.join(output_folder, "stip_coordinates.csv")
 stip_data = []
 
@@ -28,17 +34,17 @@ for image_file in image_files:
     # Get image dimensions
     height, width, _ = image.shape
 
-    # Random dot size (between 2 and 5 pixels)
+    # Select a random dot size that is between 2 and 5 pixels
     dot_radius = random.randint(2, 5)
 
-    # Random position
+    # Give the dot a random position 
     x = random.randint(dot_radius, width - dot_radius)
     y = random.randint(dot_radius, height - dot_radius)
 
-    # Draw black dot
+    # Draw the black dot
     cv2.circle(image, (x, y), dot_radius, (0, 0, 0), -1)
 
-    # Save modified image
+    # Save the modified image
     output_path = os.path.join(output_folder, image_file)
     cv2.imwrite(output_path, image, [cv2.IMWRITE_JPEG_QUALITY, 90])
 
