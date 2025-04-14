@@ -16,5 +16,6 @@ The following resources were used as a foundation for the Grad-CAM code and GMI 
 - Matplotlib Visualization: [https://matplotlib.org](https://matplotlib.org)
 - Pillow (PIL): [https://pillow.readthedocs.io](https://pillow.readthedocs.io)
 - Stack Overflow:[https://stackoverflow.com/questions/55266249/create-a-mixed-data-generator-images-csv-in-keras](https://stackoverflow.com/questions/55266249/create-a-mixed-data-generator-images-csv-in-keras) and [https://stackoverflow.com/questions/66182884/how-to-implement-grad-cam-on-a-trained-network](https://stackoverflow.com/questions/66182884/how-to-implement-grad-cam-on-a-trained-network)
-- Keras examples: [https://keras.io/examples/vision/grad_cam/](https://keras.io/examples/vision/grad_cam/) 
+- Keras examples: [https://keras.io/examples/vision/grad_cam/](https://keras.io/examples/vision/grad_cam/)
+- Scipy documentation: [https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html)
 
