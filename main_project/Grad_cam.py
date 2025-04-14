@@ -1,3 +1,8 @@
+"""
+This script is used to compute everything related to grad-cam for this project. 
+That includes computing the grad-cam, overlay the images with the grad-cam image and calculating the gmi-scores. 
+"""
+
 from tensorflow import keras
 from tensorflow.keras.models import model_from_json
 from tensorflow.keras.models import Model
@@ -27,7 +32,7 @@ def load_image(image_path):
     # Due to the images being a '.tif' file, we need to use PIL
     image = Image.open(image_path)
     image = image.resize((96, 96))
-    image = np.array(image) / 255.0  # Normalise
+    image = np.array(image) / 255.0  # Normalize
     image = np.expand_dims(image, axis=0)  # add batch dimension
 
     return image
@@ -38,8 +43,12 @@ def compute_gradcam(model, img_array, layer_name="conv2d"):
     :param model: The previously loaded model
     :param img_array: The previously loaded image
     :param layer_name: Name of the convolutional layer in your model
-    :return: The heatmap
+    :return: The heatmap and the prediction for that image
     """
+    # Check if the layer exists within the model
+    if layer_name not in [layer.name for layer in model.layers]:
+        raise ValueError(f"Layer '{layer_name}' not found in the model.")
+    
     grad_model = Model(inputs=model.input, outputs=[model.get_layer(layer_name).output, model.output])
 
     with tf.GradientTape() as tape:
@@ -70,12 +79,12 @@ def overlay_gradcam(original_image, heatmap, alpha=0.4):
     """
 
     # Convert PIL image (0-1 range) to 0-255 range for visualization
-    image = (original_image.squeeze() * 255).astype(np.uint8)  # convert back to 8-bit
+    image = (original_image.squeeze() * 255).astype(np.uint8)  
 
     # Scale the heatmap to 0-255 and convert to colormap (JET)
     heatmap = cv2.resize(heatmap, (image.shape[1], image.shape[0]))  # Resize heatmap to imput image
     heatmap = np.uint8(255 * heatmap)  # Normalise to 0-255
-    heatmap = cm.jet(heatmap)[:, :, :3]  # Matplotlib colormap (JET), deletes alpha channel
+    heatmap = cm.jet(heatmap)[:, :, :3]  # deletes alpha channel
     heatmap = np.uint8(255 * heatmap)  # convert to 8-bit
 
     # Make an overlay using alpha blending
@@ -112,13 +121,12 @@ def run_gmi_analysis(model_json, weights, csv_path, image_dir, conv_layer_name):
 
             x_scaled = int(x * scale_x)
             y_scaled = int(y * scale_y)
-            r_scaled = max(int(r * scale_x), 1)  # radius mag niet nul zijn
+            r_scaled = max(int(r * scale_x), 1)  # Makes sure that the radius is not zero
 
-            # Use scaled coordinates in the mask
+            # Use scaled coordinates in the mask to ensure the right location is selected
             mask = create_dot_mask(heatmap.shape, x_scaled, y_scaled, r_scaled)
-
-            gmi = np.sum(heatmap * mask) / (np.sum(heatmap) + 1e-8)
-
+            
+            #Compute gmi
             gmi = np.sum(heatmap * mask) / (np.sum(heatmap) + 1e-8)
 
             results.append({
@@ -141,7 +149,7 @@ results_df = run_gmi_analysis(
     csv_path="../results/test_stip_coordinates.csv",
     #image_dir="../datasets/gmi/test_jpg",       # base folder
     image_dir= "../datasets/gmi/test_modified",  # Folder with modified images
-    conv_layer_name="conv2d"   # Can be changed to another convolutional layer
+    conv_layer_name="conv2d"   # Can be changed to another convolutional layer but better to keep the same
     )
 
 print(results_df.head())
